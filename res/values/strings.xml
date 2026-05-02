@@ -2,10 +2,13 @@
     <string name="app_name">Battery Care</string>
     <string name="notification_title">Giám sát pin</string>
     <string name="notification_text">Dịch vụ theo dõi pin đang chạy</string>
+    <string name="notification_full">Pin đã đầy</string>
+    <string name="notification_abnormal">Cảnh báo pin bất thường</string>
     <string name="battery_level_default">Chờ dữ liệu pin...</string>
     <string name="battery_level_format">%d%%</string>
     <string name="label_voltage">Điện áp</string>
     <string name="label_temperature">Nhiệt độ</string>
+    <string name="label_current">Dòng sạc</string>
     <string name="label_status">Trạng thái</string>
     <string name="label_technology">Công nghệ</string>
     <string name="label_diagnosis">Chẩn đoán</string>
@@ -18,4 +21,19 @@
     <string name="battery_technology_unknown">Không xác định</string>
     <string name="battery_current_label">Dòng sạc</string>
     <string name="battery_level_detail">Mức pin hiện tại</string>
+    <string name="dialog_level_title">Mức pin</string>
+    <string name="dialog_level_message">Hiển thị phần trăm pin còn lại. Khi dưới 20%, nên sạc để tránh hỏng pin.</string>
+    <string name="dialog_voltage_title">Điện áp</string>
+    <string name="dialog_voltage_message">Điện áp pin bình thường khoảng 3.7-4.2V cho Li-ion. Nếu quá cao hoặc thấp, có thể pin bị hỏng.</string>
+    <string name="dialog_temperature_title">Nhiệt độ</string>
+    <string name="dialog_temperature_message">Nhiệt độ pin nên dưới 45°C. Quá nóng có thể gây cháy nổ hoặc giảm tuổi thọ pin.</string>
+    <string name="dialog_current_title">Dòng sạc</string>
+    <string name="dialog_current_message">Dòng sạc khi cắm sạc. Bình thường 500-2000mA. Nếu không có dòng khi cắm, kiểm tra dây sạc.</string>
+    <string name="dialog_status_title">Trạng thái</string>
+    <string name="dialog_status_message">Trạng thái sạc: Đang sạc, Đang xả, Đã đầy, Không sạc. Theo dõi để biết pin đang làm gì.</string>
+    <string name="dialog_technology_title">Công nghệ</string>
+    <string name="dialog_technology_message">Loại pin: Li-ion, Li-po, v.v. Ảnh hưởng đến cách sạc và bảo quản.</string>
+    <string name="dialog_diagnosis_title">Chẩn đoán</string>
+    <string name="dialog_diagnosis_message">Phân tích tổng thể tình trạng pin dựa trên các chỉ số. Theo dõi để bảo vệ pin.</string>
 </resources>
+

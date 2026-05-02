@@ -58,18 +58,22 @@ public class BatteryUtil {
         return points;
     }
 
-    public static String statusToString(int status, Context context) {
-        switch (status) {
-            case BatteryManager.BATTERY_STATUS_CHARGING:
-                return "Đang sạc";
-            case BatteryManager.BATTERY_STATUS_DISCHARGING:
-                return "Đang xả";
-            case BatteryManager.BATTERY_STATUS_FULL:
-                return "Đã đầy";
-            case BatteryManager.BATTERY_STATUS_NOT_CHARGING:
-                return "Không sạc";
+    public static String healthToString(int health) {
+        switch (health) {
+            case BatteryManager.BATTERY_HEALTH_GOOD:
+                return "Tốt";
+            case BatteryManager.BATTERY_HEALTH_OVERHEAT:
+                return "Quá nhiệt";
+            case BatteryManager.BATTERY_HEALTH_DEAD:
+                return "Chết";
+            case BatteryManager.BATTERY_HEALTH_OVER_VOLTAGE:
+                return "Quá áp";
+            case BatteryManager.BATTERY_HEALTH_UNSPECIFIED_FAILURE:
+                return "Lỗi không xác định";
+            case BatteryManager.BATTERY_HEALTH_COLD:
+                return "Lạnh";
             default:
-                return context.getString(R.string.battery_status_unknown);
+                return "Không xác định";
         }
     }
 }

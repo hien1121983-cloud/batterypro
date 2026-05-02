@@ -2,7 +2,10 @@ package com.batterycare;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -15,21 +18,41 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import com.batterycare.utils.BatteryUtil;
 import com.batterycare.utils.NotificationHelper;
+import com.batterycare.utils.UIHelper;
 import com.batterycare.viewmodel.BatteryViewModel;
-import com.batterycare.view.BatteryCurveView;
-import com.batterycare.view.Dialogs;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private TextView tvBatteryLevel;
     private TextView tvVoltage;
     private TextView tvTemperature;
+    private TextView tvCurrent;
     private TextView tvStatus;
     private TextView tvTechnology;
     private TextView tvDiagnosis;
     private BatteryCurveView batteryCurveView;
     private BatteryViewModel batteryViewModel;
+
+    private final BroadcastReceiver batteryUpdateReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if ("BATTERY_UPDATE".equals(intent.getAction())) {
+                int level = intent.getIntExtra("level", 0);
+                int voltage = intent.getIntExtra("voltage", 0);
+                int temperature = intent.getIntExtra("temperature", 0);
+                int current = intent.getIntExtra("current", 0);
+                int status = intent.getIntExtra("status", 0);
+                int health = intent.getIntExtra("health", 0);
+                String technology = intent.getStringExtra("technology");
+                String diagnosis = intent.getStringExtra("diagnosis");
+                List<Float> curve = BatteryUtil.buildChargeCurve(level);
+                batteryViewModel.updateBattery(level, voltage, temperature, current, status, health, technology, diagnosis, curve);
+            }
+        }
+    };
 
     private final ActivityResultLauncher<String> requestNotificationPermission =
             registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
@@ -67,33 +90,17 @@ public class MainActivity extends AppCompatActivity {
         tvBatteryLevel = findViewById(R.id.tvBatteryLevel);
         tvVoltage = findViewById(R.id.tvVoltage);
         tvTemperature = findViewById(R.id.tvTemperature);
+        tvCurrent = findViewById(R.id.tvCurrent);
         tvStatus = findViewById(R.id.tvStatus);
         tvTechnology = findViewById(R.id.tvTechnology);
-        tvDiagnosis = findViewById(R.id.tvDiagnosis);
+        tvDiagnosis = findViewById(R.id.tvDiagnosisBottom);
         batteryCurveView = findViewById(R.id.batteryCurveView);
-        View explanationTarget = findViewById(R.id.tvBatteryLevel);
-        explanationTarget.setOnClickListener(v -> showDialog());
+
+        UIHelper.bindViews(this, tvBatteryLevel, tvVoltage, tvTemperature, tvCurrent, tvStatus, tvTechnology, tvDiagnosis, batteryCurveView);
     }
 
     private void observeViewModel() {
-        batteryViewModel.getLevel().observe(this, level ->
-                tvBatteryLevel.setText(getString(R.string.battery_level_format, level)));
-
-        batteryViewModel.getVoltage().observe(this, voltage ->
-                tvVoltage.setText(getString(R.string.label_voltage) + ": " + voltage + " mV"));
-
-        batteryViewModel.getTemperature().observe(this, temperature ->
-                tvTemperature.setText(getString(R.string.label_temperature) + ": " + temperature / 10f + "°C"));
-
-        batteryViewModel.getStatus().observe(this, status ->
-                tvStatus.setText(getString(R.string.label_status) + ": " + BatteryUtil.statusToString(status, this)));
-
-        batteryViewModel.getTechnology().observe(this, technology ->
-                tvTechnology.setText(getString(R.string.label_technology) + ": " + technology));
-
-        batteryViewModel.getDiagnosisText().observe(this, tvDiagnosis::setText);
-
-        batteryViewModel.getCurveData().observe(this, batteryCurveView::setCurveData);
+        UIHelper.observeViewModel(this, batteryViewModel, this, tvBatteryLevel, tvVoltage, tvTemperature, tvCurrent, tvStatus, tvTechnology, tvDiagnosis, batteryCurveView);
     }
 
     private void requestPermissionsIfNeeded() {
@@ -113,9 +120,14 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void showDialog() {
-        Dialogs.showExplanationDialog(this,
-                getString(R.string.dialog_title),
-                getString(R.string.dialog_message));
+    @Override
+    protected void onResume() {
+        super.onResume();
+        LocalBroadcastManager.getInstance(this).registerReceiver(batteryUpdateReceiver, new IntentFilter("BATTERY_UPDATE"));
     }
-}
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(batteryUpdateReceiver);
+    }

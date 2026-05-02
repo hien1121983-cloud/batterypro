@@ -46,30 +46,57 @@
         app:layout_constraintTop_toBottomOf="@id/tvBatteryLevel" />
 
     <TextView
-        android:id="@+id/tvStatus"
+        android:id="@+id/tvCurrent"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="12dp"
+        android:text="@string/label_current"
+        android:textColor="#B0B0B0"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toStartOf="@+id/tvStatus"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvVoltage" />
+
+    <TextView
+        android:id="@+id/tvStatus"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="12dp"
         android:text="@string/label_status"
         android:textColor="#B0B0B0"
         android:textSize="14sp"
-        app:layout_constraintEnd_toStartOf="@+id/tvTechnology"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvVoltage" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/tvCurrent"
+        app:layout_constraintTop_toBottomOf="@id/tvTemperature" />
 
     <TextView
         android:id="@+id/tvTechnology"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="12dp"
         android:text="@string/label_technology"
         android:textColor="#B0B0B0"
         android:textSize="14sp"
+        app:layout_constraintEnd_toStartOf="@+id/tvDiagnosis"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvCurrent" />
+
+    <TextView
+        android:id="@+id/tvDiagnosis"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="12dp"
+        android:text="@string/label_diagnosis"
+        android:textColor="#B0B0B0"
+        android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/tvStatus"
-        app:layout_constraintTop_toBottomOf="@id/tvTemperature" />
+        app:layout_constraintStart_toEndOf="@id/tvTechnology"
+        app:layout_constraintTop_toBottomOf="@id/tvStatus" />
+
 
     <com.batterycare.view.BatteryCurveView
         android:id="@+id/batteryCurveView"
@@ -77,13 +104,13 @@
         android:layout_height="0dp"
         android:layout_marginTop="24dp"
         android:layout_marginBottom="80dp"
-        app:layout_constraintBottom_toTopOf="@+id/tvDiagnosis"
+        app:layout_constraintBottom_toTopOf="@+id/tvDiagnosisBottom"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvTechnology" />
 
     <TextView
-        android:id="@+id/tvDiagnosis"
+        android:id="@+id/tvDiagnosisBottom"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
