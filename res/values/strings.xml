@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">Battery Care</string>
+    <string name="notification_title">Giám sát pin</string>
+    <string name="notification_text">Dịch vụ theo dõi pin đang chạy</string>
+    <string name="battery_level_default">Chờ dữ liệu pin...</string>
+    <string name="battery_level_format">%d%%</string>
+    <string name="label_voltage">Điện áp</string>
+    <string name="label_temperature">Nhiệt độ</string>
+    <string name="label_status">Trạng thái</string>
+    <string name="label_technology">Công nghệ</string>
+    <string name="label_diagnosis">Chẩn đoán</string>
+    <string name="diagnosis_default">Đang phân tích trạng thái pin...</string>
+    <string name="permission_rationale">Ứng dụng cần quyền thông báo để hiển thị trạng thái pin.</string>
+    <string name="dialog_title">Giải thích chỉ số pin</string>
+    <string name="dialog_message">Mỗi chỉ số phản ánh tình trạng pin hiện tại. Chạm vào các ô để xem chi tiết.</string>
+    <string name="dialog_close">Đóng</string>
+    <string name="battery_status_unknown">Không xác định</string>
+    <string name="battery_technology_unknown">Không xác định</string>
+    <string name="battery_current_label">Dòng sạc</string>
+    <string name="battery_level_detail">Mức pin hiện tại</string>
+</resources>
